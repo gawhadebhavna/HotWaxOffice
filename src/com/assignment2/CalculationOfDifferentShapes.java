@@ -10,6 +10,7 @@ public class CalculationOfDifferentShapes extends Exception {
 		Scanner sc = new Scanner(System.in);
 		ImplementationOfCircle cc = new ImplementationOfCircle();
 		ImplementationOfTringle it = new  ImplementationOfTringle();
+		ImplementationOfRectangle ir = new  ImplementationOfRectangle();
 		int run=1;
 		label:
 		while(run==1) {
@@ -36,7 +37,7 @@ public class CalculationOfDifferentShapes extends Exception {
 		    	   break;
 		    	   
 		       case 4:
-		    	   //
+		    	   ir.tringle();
 		    	   break;
 		    	   
 		       case 5:

@@ -1,4 +1,5 @@
 package com.assignment2;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -92,7 +93,12 @@ public class ImplementationOfCircle extends Exception{
 		      System.out.println("Radius should be positive");
 		      continue label;
 	        }
-		   
+         catch(InputMismatchException ex) {
+			  
+			  System.out.println("Please check your input");
+			  continue label;
+			  
+		  }
 		  
 		}// ending of while
 	}

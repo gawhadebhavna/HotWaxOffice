@@ -2,6 +2,7 @@ package com.assignment2;
 import java.util.Scanner;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.InputMismatchException;
 
 
 public class ImplementationOfTringle extends Exception{
@@ -30,9 +31,9 @@ public class ImplementationOfTringle extends Exception{
 			   case 1:
 				   System.out.println("Please enter Base here");
 				   base = sc.nextDouble();
-				   System.out.println("Please enter Height here");
+				   
 				   height = sc.nextDouble(); 
-				   if(base < 0)
+				   if(base < 0 || height <0)
 				   {
 					   throw new ImplementationOfTringle();
 				   }
@@ -80,8 +81,22 @@ public class ImplementationOfTringle extends Exception{
 		    	  System.out.println("Height should be integer");
 		    	  continue label;
 		      }
+		      else if(run==1)
+		         {
+		        	 continue label;
+		         }
+		         else
+		         {
+		        	 throw new InputMismatchException();
+		         }
 		       
 	        }
+		  catch(InputMismatchException ex) {
+			  
+			  System.out.println("Please check your input");
+			  break;
+			  
+		  }
 		   
 		  
 		}// ending of while
