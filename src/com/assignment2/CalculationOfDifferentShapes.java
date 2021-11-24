@@ -11,6 +11,7 @@ public class CalculationOfDifferentShapes extends Exception {
 		ImplementationOfCircle cc = new ImplementationOfCircle();
 		ImplementationOfTringle it = new  ImplementationOfTringle();
 		ImplementationOfRectangle ir = new  ImplementationOfRectangle();
+		ImplementationOfSquare  is  =  new ImplementationOfSquare();
 		int run=1;
 		label:
 		while(run==1) {
@@ -29,15 +30,15 @@ public class CalculationOfDifferentShapes extends Exception {
 		    	   break;
 		    	   
 		       case 2:
-		    	   it.tringle();
+		    	    it.tringle();
 		    	   break;
 		    	   
 		       case 3:
-		    	   //
+		    	    is.square();
 		    	   break;
 		    	   
 		       case 4:
-		    	   ir.tringle();
+		    	   ir.rectangle();
 		    	   break;
 		    	   
 		       case 5:

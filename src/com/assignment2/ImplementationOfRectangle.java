@@ -16,7 +16,7 @@ public class ImplementationOfRectangle {
 	Scanner sc = new Scanner(System.in); 
 	DecimalFormat df = new DecimalFormat("0.00");
 	
-	public void tringle() {
+	public void rectangle() {
 		
 		System.out.println("Hello!! Your choice is Rectangle");
 		label:
