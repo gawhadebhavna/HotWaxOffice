@@ -12,6 +12,7 @@ public class CalculationOfDifferentShapes extends Exception {
 		ImplementationOfTringle it = new  ImplementationOfTringle();
 		ImplementationOfRectangle ir = new  ImplementationOfRectangle();
 		ImplementationOfSquare  is  =  new ImplementationOfSquare();
+		ImplementationOfSphere  iss = new  ImplementationOfSphere();
 		int run=1;
 		label:
 		while(run==1) {
@@ -21,7 +22,7 @@ public class CalculationOfDifferentShapes extends Exception {
 		 		System.out.println("Please Make Your Choice Here For The Shape On Which You Want to Perform Different Methods");
 				System.out.println("For Circle Press 1"+"\n"+"For Tringle Press 2"+"\n"+
 				                   "For Square Press 3"+"\n"+"For Rectangle Press 4"+
-						           "\n"+"For Cube Press 5");
+						           "\n"+"For Cube Press 5"+"\n"+"For Sphere Press 5");
 			   int choice = sc.nextInt();
 		       switch(choice){
 			       	
@@ -44,7 +45,9 @@ public class CalculationOfDifferentShapes extends Exception {
 		       case 5:
 		    	   //
 		    	   break;
-		    	   
+		       case 6:
+		    	    iss.sphere();
+		    	   break;
 		       default:
 		    	    System.out.println("Please enter valid choice");
 		    	    break;
