@@ -1,41 +1,69 @@
 package com.company;
 
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
-public class Main {
+public class Main extends Exception{
 
     public static void main(String[] args){
-        ArrayList<String> list=new ArrayList<>();
-        Scanner scan=new Scanner(System.in);
-        EmployeeOptions ep=new EmployeeOptions();
-        boolean x=true;
-        while(x)
-        {
-            System.out.println("*****MENU*****");
-            System.out.println("1-Add.");
-            System.out.println("2-Delete.");
-            System.out.println("3-Search.");
-            System.out.println("Enter your choice:");
-            int choice=scan.nextInt();
-            switch (choice)
-            {
-                case 1:
-                    //ep.add(list);
-                    break;
-                case 2:
-                   // ep.delete(list);
-                    break;
-                case 3:
-                    //ep.search(list);
-                    break;
-                default:
-                    System.out.println("Invalid choice:");
-                    break;
-            }
-            System.out.println("if you want to continue press true other wish press false:");
-            x=scan.nextBoolean();
-        }scan.close();
+    
+    	EmployeeOptions eo = new EmployeeOptions();
+    	Scanner sc = new Scanner(System.in);
+    	int i=1;
+    	label:
+    	while(i==1)
+    	{
+           try
+           {
+       		System.out.println("Please enter your choice here");
+       		System.out.println("For Add press 1"+"\n"+"For search press 2"+"\n"+"For delete press 3");
+       		int choice = sc.nextInt();
+       		switch(choice)
+       		{
+       		case 1:
+       			eo.add();
+       			break;
+       		case 2:
+       			eo.search();
+       			break;
+       		case 3:
+       			eo.delete();
+       			break;
+       		default:
+       			System.out.println("Please check your input");
+       				
+       		}
+       		System.out.println("If you want to continue please press 1 or press 0");
+       		i = sc.nextInt();
+       		if(i==1)
+       		{
+       			continue label;
+       		}
+       		else if(i==0)
+       		{
+       			System.out.println("Bye!!");
+       			System.exit(0);
+       		}
+       		else if(i>1 && i<0)
+       		{
+       			throw new Main();
+       		}
+        	   
+           }
+           catch(Main mn)
+           {
+        	   System.out.println("Please check your input and try again");
+        	   i = sc.nextInt();
+   	    	   continue label;
+        	   
+           }
+    		
+    	}
+    	
+    	
+    	
+    	
+    	
     }
 
 }
