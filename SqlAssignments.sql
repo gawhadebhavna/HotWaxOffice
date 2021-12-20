@@ -16,6 +16,13 @@ Query -> SELECT snum,sname,city,comm FROM salespeople;
 
 
 
+
+**************************************************************************************************************************************
+
+
+
+
+
 Que 2 -> List all customers with a rating of 100.
 
 Query -> SELECT cname FROM Customers  
@@ -28,6 +35,15 @@ Query -> SELECT cname FROM Customers
 | Pereira |
 +---------+
 3 rows in set (0.00 sec)
+
+
+
+
+
+**************************************************************************************************************************************
+
+
+
 
 
 
@@ -50,6 +66,16 @@ Query -> mysql> SELECT snum ,odate,MAX(AMT) AS Max_Amount
 +------+------------+------------+
 9 rows in set (0.00 sec)
 
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+
 Que 4 ->  Arrange the Order table by descending customer number. 
 
 Query ->  SELECT onum, amt, odate, cnum,snum  
@@ -70,6 +96,17 @@ Query ->  SELECT onum, amt, odate, cnum,snum
 +------+---------+------------+------+------+
 10 rows in set (0.00 sec)
 
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+
+
 Que 5 ->  Find which salespeople currently have orders in the order table. 
 
 Query ->   SELECT DISTINCT sname  
@@ -85,6 +122,14 @@ Query ->   SELECT DISTINCT sname
 | Rifkin  |
 +---------+
 5 rows in set (0.00 sec)
+
+
+
+
+
+
+**************************************************************************************************************************************
+
 
 
 Que 6 -> List names of all customers matched with the salespeople serving them. 
@@ -106,6 +151,14 @@ Query -> SELECT cust.cnum,cname
 7 rows in set (0.00 sec)
 
 
+
+
+**************************************************************************************************************************************
+
+
+
+
+
 Que 7 ->  Find the names and numbers of all salespeople who have more than one customer. 
 
 Query ->   
@@ -122,6 +175,14 @@ Query ->
 | 1007 | Rifkin  |     1 |
 +------+---------+-------+
 5 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+
 
 
 Que 8 -> Count the orders of each of the salespeople and output the results in descending order.
@@ -141,6 +202,13 @@ Query -> SELECT DISTINCT  C.SNUM,S.SNAME,COUNT(*) AS Order_Count
 5 rows in set (0.00 sec)
 
 
+
+
+**************************************************************************************************************************************
+
+
+
+
 Que 9 -> List the customer table if and only if one or more of the customers in the Customer table are located in SanJose.
 
 Query -> SELECT cnum,cname,city,rating,snum
@@ -153,6 +221,14 @@ Query -> SELECT cnum,cname,city,rating,snum
 | 2003 | Liu      | SanJose |    200 | 1002 |
 | 2008 | Cisneros | SanJose |    300 | 1007 |
 +------+----------+---------+--------+------+
+
+
+
+
+**************************************************************************************************************************************
+
+
+
 
 
 Que 10 -> Match salespeople to customers according to what city they live in.
@@ -175,6 +251,13 @@ Query  -> SELECT S.sname,C.cname,S.city
 8 rows in set (0.01 sec)
 
 
+
+
+**************************************************************************************************************************************
+
+
+
+
 Que 11-> Find all the customers in SanJose who have a rating above 200.
 
 Query -> SELECT cnum,cname,city,rating
@@ -186,6 +269,10 @@ Query -> SELECT cnum,cname,city,rating
 | 2008 | Cisneros | SanJose |    300 |
 +------+----------+---------+--------+
 1 row in set (0.00 sec)
+
+
+**************************************************************************************************************************************
+
 
 
 Que 12 -> List the names and commissions of all salespeople in London.
@@ -203,6 +290,11 @@ Query  -> SELECT sname,comm
 3 rows in set (0.00 sec)
 
 
+
+**************************************************************************************************************************************
+
+
+
 Que 13 -> List all the orders of Salesperson Motika from the orders table.
 
 Query  -> SELECT O.onum,amt,odate
@@ -217,6 +309,9 @@ Query  -> SELECT O.onum,amt,odate
 +------+--------+------------+
 1 row in set (0.00 sec)
 
+ 
+**************************************************************************************************************************************
+ 
        
 
 Que 14  -> Find all customers who booked orders on October 3.
@@ -238,6 +333,11 @@ Query  -> SELECT C.cnum,C.name,C.rating
 5 rows in set (0.00 sec)
 
 
+**************************************************************************************************************************************
+
+
+
+
 Que 15  ->  Give the sums of the amounts from the Orders table, grouped by date, eliminating all those dates where the SUM was not at    least 2000 above  the maximum Amount.
 
 Query  ->SELECT odate,SUM(amt) AS total_amt 
@@ -252,6 +352,11 @@ Query  ->SELECT odate,SUM(amt) AS total_amt
 | 1990-06-10 |  11201.83 |
 +------------+-----------+
 4 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
 
 
 Que 16 -> Select all orders that had amounts that were greater than at least one of the orders from October 6.
@@ -272,6 +377,9 @@ Query   -> SELECT onum,amt,odate
 +------+---------+------------+
 5 rows in set (0.00 sec)
 
+**************************************************************************************************************************************
+
+
 
 Que 17 ->  Write a query that uses the EXISTS operator to extract all salespeople who have customers with a rating of 300.
 
@@ -290,6 +398,10 @@ Query  ->   SELECT S.snum,S.sname,S.city
 2 rows in set (0.01 sec)
 
 
+**************************************************************************************************************************************
+
+
+
 Que 18  ->  Find all customers whose cnum is 1000 above the snum of Serres.
 
 Query   -> SELECT C.CNUM,C.CNAME 
@@ -303,6 +415,11 @@ Query   -> SELECT C.CNUM,C.CNAME
 | 2005 | Clemens |
 | 2007 | Pereira |
 +------+---------+
+
+
+
+**************************************************************************************************************************************
+
 
 
 Que 19  -> Give the salespeople’s commissions as percentages instead of decimal numbers.
@@ -320,6 +437,11 @@ Query   -> SELECT sname,comm*100 AS COMM
 | Rifkin  | 1500 |
 | Fran    | 2500 |
 +---------+------+
+6 rows in set (0.00 sec)
+ 
+**************************************************************************************************************************************
+ 
+ 
  
 Que 20 -> Find the largest order taken by each salesperson on each date, eliminating those Maximum orders, which are less than 3000.
 
@@ -333,14 +455,160 @@ Query  -> SELECT onum,odate,MAX(amt)
 | 3008 | 1990-05-10 |     4723 |
 | 3011 | 1990-06-10 |  9891.88 |
 +------+------------+----------+
-3 rows in set (0.00 sec)        
+3 rows in set (0.00 sec)  
+
+
+
+
+**************************************************************************************************************************************
+      
+
 
 Que 21 ->  List all the largest orders for October 3, for each salesperson.
 
+Query  -> SELECT  MAX(amt) AS total_amount 
+       -> FROM Orders O,salespeople S 
+       -> WHERE O.snum = S.snum AND odate='1990-03-10';
++--------------+
+| total_amount |
++--------------+
+|      5160.45 |
++--------------+
+1 row in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+
 Que 22 ->  Find all customers located in cities where Serres has customers.
 
+Query  -> SELECT C.cnum,C.cname,C.city 
+       -> FROM Customers C
+       -> INNER JOIN salespeople S ON S.snum=C.snum
+       -> WHERE S.sname='Serres';
++------+-------+---------+
+| cnum | cname | city    |
++------+-------+---------+
+| 2003 | Liu   | SanJose |
+| 2004 | Grass | Berlin  |
++------+-------+---------+
+2 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
 
 
 
 
+Que 23 -> Select all customers with a rating above 200
+
+Query  -> SELECT cnum,cname,city,rating 
+       -> FROM Customers 
+       -> WHERE rating > 200;
++------+----------+---------+--------+
+| cnum | cname    | city    | rating |
++------+----------+---------+--------+
+| 2004 | Grass    | Berlin  |    300 |
+| 2008 | Cisneros | SanJose |    300 |
++------+----------+---------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+
+Que 24 -> Count the number of salespeople currently having orders in the orders table.
+
+Query  ->SELECT S.sname,COUNT(O.snum) AS total_order 
+       ->FROM salespeople S INNER JOIN Orders O ON O.snum=S.snum 
+       ->GROUP BY S.sname ;
++---------+---------------+
+| sname   | total_order   |
++---------+---------------+
+| AxelRod |             1 |
+| Motika  |             1 |
+| Peel    |             3 |
+| Rifkin  |             2 |
+| Serres  |             3 |
++---------+---------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+Que 25 -> Write a query that produces all customers serviced by salespeople with a commission above 12%. Output the customer’s name,salesperson’s name and the salesperson’s rate of commission.
+
+Query  ->
+
+
+
+
+
+
+**************************************************************************************************************************************
+
+Que 26 ->
+
+
+
+
+
+
+**************************************************************************************************************************************
+
+Que 27 ->
+
+
+
+
+
+
+
+
+
+
+
+
+
+**************************************************************************************************************************************
+
+
+Que 28 ->
+
+
+
+
+
+
+**************************************************************************************************************************************
+
+Que 29 ->
+
+
+
+
+
+
+
+**************************************************************************************************************************************
+Que 30 ->
+
+
+
+**************************************************************************************************************************************
 
