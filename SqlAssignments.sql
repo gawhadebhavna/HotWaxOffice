@@ -553,8 +553,154 @@ Query  ->SELECT S.sname,COUNT(O.snum) AS total_order
 
 Que 25 -> Write a query that produces all customers serviced by salespeople with a commission above 12%. Output the customer’s name,salesperson’s name and the salesperson’s rate of commission.
 
-Query  ->
 
+Query  ->SELECT S.sname,C.cname,S.comm 
+       ->FROM salespeople S 
+       ->INNER JOIN Customers C ON S.snum=C.snum 
+       ->WHERE S.comm > 12;
++--------+----------+------+
+| sname  | cname    | comm |
++--------+----------+------+
+| Serres | Liu      | 13   |
+| Serres | Grass    | 13   |
+| Rifkin | Cisneros | 15   |
++--------+----------+------+
+3 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+Que 26 -> Find salespeople who have multiple customers.
+
+Query  ->SELECT snum, COUNT(snum) AS total_customers  
+       ->FROM Customers  
+       ->GROUP BY snum  
+       ->HAVING COUNT(snum)>1;
++------+-----------------+
+| snum | total_customers |
++------+-----------------+
+| 1001 |               2 |
+| 1002 |               2 |
++------+-----------------+
+2 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+Que 27 ->Find salespeople with customers located in their own cities.
+
+Query  ->SELECT S.snum,S.sname,C.cname,S.city AS city 
+       ->FROM salespeople S, Customers C  
+       ->WHERE C.city = S.city;
++------+--------+----------+---------+
+| snum | sname  | cname    | city    |
++------+--------+----------+---------+
+| 1001 | Peel   | hoffman  | London  |
+| 1004 | Motika | hoffman  | London  |
+| 1008 | Fran   | hoffman  | London  |
+| 1002 | Serres | Liu      | SanJose |
+| 1001 | Peel   | Clemens  | London  |
+| 1004 | Motika | Clemens  | London  |
+| 1008 | Fran   | Clemens  | London  |
+| 1002 | Serres | Cisneros | SanJose |
++------+--------+----------+---------+
+8 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+Que 28 -> Find all salespeople whose name starts with ‘P’ and fourth character is ‘L’.
+
+Query  -> SELECT snum,sname  
+       -> FROM salespeople  
+       -> WHERE sname LIKE 'P__L';
++------+-------+
+| snum | sname |
++------+-------+
+| 1001 | Peel  |
++------+-------+
+1 row in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+Que 29 -> Write a query that uses a subquery to obtain all orders for the customer named ‘Cisneros’. Assume you do not know his customer number.
+
+
+Query -> SELECT onum,odate,amt 
+      -> FROM Orders 
+      -> WHERE Orders.cnum=(SELECT cnum
+                            FROM Customers              
+                            WHERE cname='Cisneros');
++------+------------+---------+
+| onum | odate      | amt     |
++------+------------+---------+
+| 3001 | 1990-03-10 |   18.69 |
+| 3006 | 1990-03-10 | 1098.16 |
++------+------------+---------+
+2 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+Que 30 ->Find the largest orders for Serres and Rifkin.
+
+Query  ->SELECT snum,MAX(amt) AS Total_Amount 
+       ->FROM Orders 
+       ->GROUP BY snum HAVING snum IN(SELECT snum 
+                                      FROM salespeople 
+                                      WHERE sname='Serres' OR sname= 'Rifkin');
++------+--------------+
+| snum | Total_Amount |
++------+--------------+
+| 1002 |      5160.45 |
+| 1007 |      1098.16 |
++------+--------------+
+2 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+
+Que 31 -> Sort the salespeople table in the following order: snum, sname, commission, city.
+
+Query  ->SELECT snum,sname,city,comm 
+       ->FROM salespeople;
++------+---------+-----------+------+
+| snum | sname   | city      | comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 12   |
+| 1002 | Serres  | SanJose   | 13   |
+| 1003 | AxelRod | New York  | 10   |
+| 1004 | Motika  | London    | 11   |
+| 1007 | Rifkin  | Barcelona | 15   |
+| 1008 | Fran    | London    | 25   |
++------+---------+-----------+------+
+6 rows in set (0.00 sec)
 
 
 
@@ -562,8 +708,104 @@ Query  ->
 
 **************************************************************************************************************************************
 
-Que 26 ->
 
+
+
+Que 32 -> Select all customers whose names fall in between ‘A’ and ‘G’ alphabetical range
+
+Query -> SELECT cnum,cname  
+      -> FROM Customers  
+      -> WHERE cname BETWEEN 'A' AND 'G'
+      -> GROUP BY cnum;
++------+----------+
+| cnum | cname    |
++------+----------+
+| 2006 | Clemens  |
+| 2008 | Cisneros |
++------+----------+
+2 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+Que 33 -> Select all the possible combinations of customers you can assign.
+
+Query  -> SELECT S.sname,C.cname 
+       -> FROM salespeople S 
+       -> INNER JOIN Customers C ON S.snum=C.snum;
++---------+----------+
+| sname   | cname    |
++---------+----------+
+| Peel    | hoffman  |
+| AxelRod | Giovanni |
+| Serres  | Liu      |
+| Serres  | Grass    |
+| Peel    | Clemens  |
+| Motika  | Pereira  |
+| Rifkin  | Cisneros |
++---------+----------+
+7 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+
+Que 34 -> Select all orders that are greater than the average for October 4.
+
+Query  ->SELECT O.onum,O.amt,O.odate
+       ->FROM Orders O
+       ->WHERE amt>(SELECT AVG(amt)
+       ->           FROM Orders
+       ->           WHERE odate='1990-04-10');
++------+---------+------------+
+| onum | amt     | odate      |
++------+---------+------------+
+| 3002 |  1900.1 | 1990-03-10 |
+| 3005 | 5160.45 | 1990-03-10 |
+| 3006 | 1098.16 | 1990-03-10 |
+| 3008 |    4723 | 1990-05-10 |
+| 3009 | 1713.23 | 1990-04-10 |
+| 3010 | 1309.95 | 1990-06-10 |
+| 3011 | 9891.88 | 1990-06-10 |
++------+---------+------------+
+7 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+Que 35 -> Write a select command using correlated subquery that selects the names and numbers of all customers with ratings equal to the maximumfor their city.
+
+
+Query ->SELECT cnum,cname,city,rating 
+      ->FROM Customers 
+      ->WHERE rating IN(SELECT MAX(rating)                
+                        FROM Customers                
+                        GROUP BY city);
++------+----------+---------+--------+
+| cnum | cname    | city    | rating |
++------+----------+---------+--------+
+| 2001 | hoffman  | london  |    100 |
+| 2002 | Giovanni | Rome    |    200 |
+| 2003 | Liu      | SanJose |    200 |
+| 2004 | Grass    | Berlin  |    300 |
+| 2006 | Clemens  | London  |    100 |
+| 2007 | Pereira  | Rome    |    100 |
+| 2008 | Cisneros | SanJose |    300 |
++------+----------+---------+--------+
+7 rows in set (0.00 sec)
 
 
 
@@ -571,44 +813,139 @@ Que 26 ->
 
 **************************************************************************************************************************************
 
-Que 27 ->
+
+
+Que 36 -> Write a query that totals the orders for each day and places the results in descending order.
+
+Query  -> SELECT SUM(amt) AS total_amt,odate 
+       -> FROM Orders 
+       -> GROUP BY odate 
+       -> ORDER BY odate DESC;
++-----------+------------+
+| total_amt | odate      |
++-----------+------------+
+|  11201.83 | 1990-06-10 |
+|      4723 | 1990-05-10 |
+|   1788.98 | 1990-04-10 |
+|   8944.59 | 1990-03-10 |
++-----------+------------+
+4 rows in set (0.00 sec)
+ 
+
+
+**************************************************************************************************************************************
+
+Que 37 -> Write a select command that produces the rating followed by the name of each customer in SanJose.
+
+Query -> SELECT cnum,cname,rating 
+      -> FROM Customers 
+      -> WHERE city ='SanJose';
++------+----------+--------+
+| cnum | cname    | rating |
++------+----------+--------+
+| 2003 | Liu      |    200 |
+| 2008 | Cisneros |    300 |
++------+----------+--------+
+2 rows in set (0.00 sec)
+
+
+**************************************************************************************************************************************
+
+Que 38 -> Find all orders with above average amounts for their customers.
+
+Query  -> SELECT onum,amt,cnum
+       -> FROM Orders 
+       -> WHERE amt > (SELECT AVG(amt)
+       ->              FROM Orders);
++------+---------+------+
+| onum | amt     | cnum |
++------+---------+------+
+| 3005 | 5160.45 | 2003 |
+| 3008 |    4723 | 2006 |
+| 3011 | 9891.88 | 2006 |
++------+---------+------+
+3 rows in set (0.00 sec)
 
 
 
+**************************************************************************************************************************************
 
+Que 39 ->Find all orders with amounts smaller than any amount for a customer in SanJose. 
 
-
-
-
-
-
+Query  -> SELECT onum,amt,odate,cnum 
+       -> FROM Orders  
+       -> WHERE amt < (SELECT amt              
+                       FROM Orders             
+                       WHERE cnum = (SELECT cnum                         
+                       FROM Customers
+                       WHERE city ='SanJose' AND cname='Liu'));
++------+---------+------------+------+
+| onum | amt     | odate      | cnum |
++------+---------+------------+------+
+| 3001 |   18.69 | 1990-03-10 | 2008 |
+| 3002 |  1900.1 | 1990-03-10 | 2007 |
+| 3003 |  767.19 | 1990-03-10 | 2001 |
+| 3006 | 1098.16 | 1990-03-10 | 2008 |
+| 3007 |   75.75 | 1990-04-10 | 2004 |
+| 3008 |    4723 | 1990-05-10 | 2006 |
+| 3009 | 1713.23 | 1990-04-10 | 2002 |
+| 3010 | 1309.95 | 1990-06-10 | 2004 |
++------+---------+------------+------+
+8 rows in set (0.00 sec)
 
 
 
 **************************************************************************************************************************************
 
 
-Que 28 ->
+Que 40 -> Write a query that selects the highest rating in each city.
 
-
-
-
-
-
-**************************************************************************************************************************************
-
-Que 29 ->
-
-
-
-
-
-
+Query  -> SELECT city,MAX(rating) AS Max_rating 
+       -> FROM Customers 
+       -> GROUP BY city;
++---------+------------+
+| city    | Max_rating |
++---------+------------+
+| Berlin  |        300 |
+| london  |        100 |
+| Rome    |        200 |
+| SanJose |        300 |
++---------+------------+
+4 rows in set (0.00 sec)
 
 **************************************************************************************************************************************
-Que 30 ->
 
 
 
-**************************************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
