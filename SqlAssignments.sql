@@ -898,6 +898,8 @@ Query  -> SELECT onum,amt,odate,cnum
 **************************************************************************************************************************************
 
 
+
+
 Que 40 -> Write a query that selects the highest rating in each city.
 
 Query  -> SELECT city,MAX(rating) AS Max_rating 
@@ -913,31 +915,246 @@ Query  -> SELECT city,MAX(rating) AS Max_rating
 +---------+------------+
 4 rows in set (0.00 sec)
 
+
+
+
 **************************************************************************************************************************************
 
 
 
 
+Que 41 ->Write a query that calculates the amount of the salesperson’s commission on each order by a customer with a rating above 100.00.
+
+Query  ->SELECT S.snum,S.sname,S.comm*O.amt AS total_amt 
+       ->FROM salespeople S 
+       ->INNER JOIN Customers C ON C.snum=S.snum 
+       ->INNER JOIN Orders O ON C.cnum=O.cnum  
+       ->WHERE C.rating > 100;
++------+---------+--------------------+
+| snum | sname   | total_amt          |
++------+---------+--------------------+
+| 1003 | AxelRod |            17132.3 |
+| 1002 | Serres  |  67085.84999999999 |
+| 1002 | Serres  |             984.75 |
+| 1002 | Serres  | 17029.350000000002 |
+| 1007 | Rifkin  |             280.35 |
+| 1007 | Rifkin  |            16472.4 |
++------+---------+--------------------+
+6 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+Que 42 -> Count the customers with ratings above SanJose’s average.
+
+Query  ->SELECT COUNT(city) AS total_count 
+       ->FROM Customers 
+       ->WHERE rating > (SELECT AVG(rating)                 
+                         FROM Customers                 
+                         WHERE city='SanJose');
++-------------+
+| total_count |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+Que 43 ->Find all salespeople that are located in either Barcelona or London
+
+Query  ->SELECT snum,sname,city
+       ->FROM salespeople
+       ->WHERE city='Barcelona' OR city='London';
++------+--------+-----------+
+| snum | sname  | city      |
++------+--------+-----------+
+| 1001 | Peel   | London    |
+| 1004 | Motika | London    |
+| 1007 | Rifkin | Barcelona |
+| 1008 | Fran   | London    |
++------+--------+-----------+
+4 rows in set (0.00 sec)
+
+
+**************************************************************************************************************************************
+
+
+Que 44 ->Find all salespeople with only one customer
+
+Query  ->SELECT snum
+       -> FROM Customers
+       -> GROUP BY snum
+       -> HAVING COUNT(snum)<=1;
++------+
+| snum |
++------+
+| 1003 |
+| 1004 |
+| 1007 |
++------+
+3 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+Que 45 ->Write a query that joins the Customer table to itself to find all pairs or customers served by a single salesperson.
+
+Query  ->SELECT C1.cname AS Cname1,C2.cname AS Cname2,S.sname  
+       ->FROM Customers C1 
+       ->JOIN Customers C2 
+           ON C1.cnum=C2.cnum 
+       ->JOIN salespeople S 
+           ON S.snum=C1.snum;
++----------+----------+---------+
+| Cname1   | Cname2   | sname   |
++----------+----------+---------+
+| hoffman  | hoffman  | Peel    |
+| Giovanni | Giovanni | AxelRod |
+| Liu      | Liu      | Serres  |
+| Grass    | Grass    | Serres  |
+| Clemens  | Clemens  | Peel    |
+| Pereira  | Pereira  | Motika  |
+| Cisneros | Cisneros | Rifkin  |
++----------+----------+---------+
+7 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+Que 46 -> Write a query that will give you all orders for more than $1000.00.
+
+
+Query  ->SELECT onum,amt,odate
+       ->FROM Orders
+       ->WHERE amt > 1000;
++------+---------+------------+
+| onum | amt     | odate      |
++------+---------+------------+
+| 3002 |  1900.1 | 1990-03-10 |
+| 3005 | 5160.45 | 1990-03-10 |
+| 3006 | 1098.16 | 1990-03-10 |
+| 3008 |    4723 | 1990-05-10 |
+| 3009 | 1713.23 | 1990-04-10 |
+| 3010 | 1309.95 | 1990-06-10 |
+| 3011 | 9891.88 | 1990-06-10 |
++------+---------+------------+
+7 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+Que 47 ->Write a query that lists each order number followed by the name of the customer who made that order.
+
+
+Query  ->SELECT O.onum,O.amt,C.cname
+       -> FROM Orders O
+       -> JOIN Customers C
+       ->   ON C.cnum=O.cnum;
++------+---------+----------+
+| onum | amt     | cname    |
++------+---------+----------+
+| 3003 |  767.19 | hoffman  |
+| 3009 | 1713.23 | Giovanni |
+| 3005 | 5160.45 | Liu      |
+| 3007 |   75.75 | Grass    |
+| 3010 | 1309.95 | Grass    |
+| 3008 |    4723 | Clemens  |
+| 3011 | 9891.88 | Clemens  |
+| 3002 |  1900.1 | Pereira  |
+| 3001 |   18.69 | Cisneros |
+| 3006 | 1098.16 | Cisneros |
++------+---------+----------+
+10 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+Que 48 ->Write a query that selects all the customers whose ratings are equal to or greater than ANY(in the SQL sense) of ‘Serres’
+
+Query  ->SELECT C.cnum,C.cname,C.city      
+       ->FROM Customers C      
+       ->JOIN salespeople S
+       -> ON C.snum=S.snum      
+       ->WHERE C.rating >= Any(SELECT rating      
+                               FROM Customers                            
+                               WHERE snum=(SELECT snum
+                                           FROM salespeople                                         
+                                           WHERE sname='Serres'));
++------+----------+---------+
+| cnum | cname    | city    |
++------+----------+---------+
+| 2002 | Giovanni | Rome    |
+| 2003 | Liu      | SanJose |
+| 2004 | Grass    | Berlin  |
+| 2008 | Cisneros | SanJose |
++------+----------+---------+
+4 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+Que 49 -> Write two queries that will produce all orders taken on October 3 or October 4.
+
+Query  -> SELECT onum,amt,odate
+       -> FROM Orders
+       -> WHERE odate='1990-03-10' OR odate='1990-04-10';
++------+---------+------------+
+| onum | amt     | odate      |
++------+---------+------------+
+| 3001 |   18.69 | 1990-03-10 |
+| 3002 |  1900.1 | 1990-03-10 |
+| 3003 |  767.19 | 1990-03-10 |
+| 3005 | 5160.45 | 1990-03-10 |
+| 3006 | 1098.16 | 1990-03-10 |
+| 3007 |   75.75 | 1990-04-10 |
+| 3009 | 1713.23 | 1990-04-10 |
++------+---------+------------+
+7 rows in set (0.00 sec)
 
 
 
 
 
+**************************************************************************************************************************************
+
+Que 50 ->Find only those customers whose ratings are higher than every customer in Rome.
+
+Query  ->SELECT cnum,cname,city,rating 
+       ->FROM Customers 
+       ->WHERE rating > (SELECT MAX(rating)                    
+                         FROM Customers                    
+                         WHERE city='Rome');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
++------+----------+---------+--------+
+| cnum | cname    | city    | rating |
++------+----------+---------+--------+
+| 2004 | Grass    | Berlin  |    300 |
+| 2008 | Cisneros | SanJose |    300 |
++------+----------+---------+--------+
+2 rows in set (0.00 sec)
 
 
 
