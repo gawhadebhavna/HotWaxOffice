@@ -1158,6 +1158,232 @@ Query  ->SELECT cnum,cname,city,rating
 
 
 
+**************************************************************************************************************************************
+
+
+
+
+Que 51 ->Write a query on the Customers table whose output will exclude all customers with a rating<= 100.00, unless they are located in Rome.
+
+Query  -> SELECT cnum,city,rating 
+       -> FROM Customers 
+       -> WHERE (rating <= 100 AND city ='Rome') OR rating >=100;
++------+---------+--------+
+| cnum | city    | rating |
++------+---------+--------+
+| 2001 | london  |    100 |
+| 2002 | Rome    |    200 |
+| 2003 | SanJose |    200 |
+| 2004 | Berlin  |    300 |
+| 2006 | London  |    100 |
+| 2007 | Rome    |    100 |
+| 2008 | SanJose |    300 |
++------+---------+--------+
+7 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+
+
+Que 52 ->Find all rows from the customer’s table for which the salesperson number is 1001.
+
+
+Query  ->SELECT cnum,cname,city
+       -> FROM Customers 
+       -> WHERE snum=1001;
+
++------+---------+--------+
+| cnum | cname   | city   |
++------+---------+--------+
+| 2001 | hoffman | london |
+| 2006 | Clemens | London |
++------+---------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+**************************************************************************************************************************************
+
+
+Que 53 ->Find the total amount in orders for each salesperson where their total of amounts are greater than the amount of the largest order in the table
+
+Query  ->
+
+
+
+
+
+
+
+**************************************************************************************************************************************
+
+
+Que 54 ->Write a query that selects all orders save those with zeroes or NULL in the amount file.
+
+
+Query  ->SELECT onum,amt,odate
+       -> FROM Orders
+       -> WHERE amt IS NULL OR amt=0;
+
+Empty set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+Que 55 -> Produce all combinations of salespeople and customer names such that the former precedes the latter alphabetically, and the latter has a rating of less than 200.
+
+
+Query  ->SELECT C.cnum,C.cname,S.snum,S.sname,C.rating 
+       ->FROM Customers C 
+       ->JOIN salespeople S  
+          ON S.snum=C.snum 
+       ->WHERE C.rating<200 
+       ->ORDER BY C.cname;
++------+---------+------+--------+--------+
+| cnum | cname   | snum | sname  | rating |
++------+---------+------+--------+--------+
+| 2006 | Clemens | 1001 | Peel   |    100 |
+| 2001 | hoffman | 1001 | Peel   |    100 |
+| 2007 | Pereira | 1004 | Motika |    100 |
++------+---------+------+--------+--------+
+
+3 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+Que 56 ->Find all salespeople name and commission.
+
+Query  -> SELECT sname,comm
+       -> FROM salespeople;
+
+
++---------+------+
+| sname   | comm |
++---------+------+
+| Peel    | 12   |
+| Serres  | 13   |
+| AxelRod | 10   |
+| Motika  | 11   |
+| Rifkin  | 15   |
+| Fran    | 25   |
++---------+------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+
+**************************************************************************************************************************************
+
+
+Que 57 -> Write a query that produces the names and cities of all customers with the same rating as Hoffman. Write the query using Hoffman’s cnum rather than his rating, so that it would still be usable if his rating is changed.
+
+Query  ->SELECT cnum,cname,city,rating
+       -> FROM Customers
+       -> WHERE rating = (SELECT rating 
+       ->                 FROM Customers
+       ->                 WHERE cname='Hoffman');
++------+---------+--------+--------+
+| cnum | cname   | city   | rating |
++------+---------+--------+--------+
+| 2001 | hoffman | london |    100 |
+| 2006 | Clemens | London |    100 |
+| 2007 | Pereira | Rome   |    100 |
++------+---------+--------+--------+
+3 rows in set (0.01 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+Que 58 ->Find all salespeople for whom there are customers that follow them in alphabetical order.
+
+Query  ->SELECT s.snum,s.sname,s.city,s.comm 
+       ->FROM salespeople s 
+       ->WHERE  EXISTS(SELECT c.cnum,c.cname 
+                       FROM Customers c 
+                       WHERE s.sname  < c.cname);
+
+
++------+---------+----------+------+
+| snum | sname   | city     | comm |
++------+---------+----------+------+
+| 1001 | Peel    | London   | 12   |
+| 1003 | AxelRod | New York | 10   |
+| 1004 | Motika  | London   | 11   |
+| 1008 | Fran    | London   | 25   |
++------+---------+----------+------+
+4 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+Que 59 -> Write a query that produces the names and ratings of all customers who have average orders.
+
+
+Query  ->SELECT cnum,cname,rating 
+       ->FROM Customers  
+       ->WHERE rating > (SELECT AVG(rating)
+                         FROM Customers);
+
+
++------+----------+--------+
+| cnum | cname    | rating |
++------+----------+--------+
+| 2002 | Giovanni |    200 |
+| 2003 | Liu      |    200 |
+| 2004 | Grass    |    300 |
+| 2008 | Cisneros |    300 |
++------+----------+--------+
+4 rows in set (0.00 sec)
+
+
+
+**************************************************************************************************************************************
+
+
+
+Que 60 ->Find the SUM of all Amounts from the orders table
+
+
+Query  ->SELECT SUM(amt) AS total_amt
+       -> FROM Orders;
+    
++-----------+
+| total_amt |
++-----------+
+|   26658.4 |
++-----------+
+1 row in set (0.00 sec)
+
+
+
+***********************************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
 
 
 
