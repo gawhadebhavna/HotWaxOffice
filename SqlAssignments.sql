@@ -1659,26 +1659,70 @@ Query ->SELECT C.cnum,C.cname
 ***********************************************************************************************************************************
 
 
+
 Que 73->Write a query on the customer’s table that will find the highest rating in each city. Put the output in this form: for the city (city), the highest rating is (rating).
 
-Query ->
+Query ->SELECT city AS the_city, MAX(rating) AS the_highest_rating 
+      ->FROM Customers       
+      ->GROUP BY city;
+
+
++----------+--------------------+
+| the_city | the_highest_rating |
++----------+--------------------+
+| Berlin   |                300 |
+| london   |                100 |
+| Rome     |                200 |
+| SanJose  |                300 |
++----------+--------------------+
+4 rows in set (0.00 sec)
+
 
 
 
 ***********************************************************************************************************************************
 
 
-Que 74->
+Que 74->Write a query that will produce the snum values of all salespeople with orders, having amt greater than 1000 in the Orders Table(without repeats).
 
-Query ->
+Query -> SELECT snum,sname
+      -> FROM salespeople
+      -> WHERE snum = ANY(SELECT DISTINCT snum
+      ->                  FROM Orders 
+      ->                  WHERE amt > 1000);
++------+---------+
+| snum | sname   |
++------+---------+
+| 1004 | Motika  |
+| 1002 | Serres  |
+| 1007 | Rifkin  |
+| 1001 | Peel    |
+| 1003 | AxelRod |
++------+---------+
+5 rows in set (0.00 sec)
 
 
 ***********************************************************************************************************************************
 
 
-Que 75->
+Que 75->Write a query that lists customers in a descending order of rating. Output the rating field first, followed by the customer’s names and numbers.
 
-Query ->
+Query -> SELECT rating,cname,cnum
+      -> FROM Customers 
+      -> ORDER BY rating DESC;
++--------+----------+------+
+| rating | cname    | cnum |
++--------+----------+------+
+|    300 | Grass    | 2004 |
+|    300 | Cisneros | 2008 |
+|    200 | Giovanni | 2002 |
+|    200 | Liu      | 2003 |
+|    100 | hoffman  | 2001 |
+|    100 | Clemens  | 2006 |
+|    100 | Pereira  | 2007 |
++--------+----------+------+
+7 rows in set (0.00 sec)
+
 
 
 ***********************************************************************************************************************************
