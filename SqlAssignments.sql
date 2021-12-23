@@ -1728,36 +1728,17 @@ Query -> SELECT rating,cname,cnum
 ***********************************************************************************************************************************
 
 
-Que 76->
+Que 76->Find the average commission for salespeople in London
 
-Query ->
-
-
-
-***********************************************************************************************************************************
-
-
-Que 77->
-
-Query ->
-
-
-
-***********************************************************************************************************************************
-
-
-Que 78->
-
-Query ->
-
-
-
-***********************************************************************************************************************************
-
-
-Que 79->
-
-Query ->
+Query ->SELECT AVG(comm) AS Average_comm
+      -> FROM salespeople 
+      -> WHERE city ='London';
++--------------+
+| Average_comm |
++--------------+
+|           16 |
++--------------+
+1 row in set (0.00 sec)
 
 
 
@@ -1765,9 +1746,90 @@ Query ->
 ***********************************************************************************************************************************
 
 
-Que 80->
+Que 77->Find all orders credited to the same salesperson who services Hoffman.(cnum 2001).
 
-Query ->
+Query -> SELECT onum,amt
+      -> FROM Orders 
+      -> WHERE snum = (SELECT snum
+      ->               FROM Customers 
+      ->               WHERE cnum=2001);
++------+---------+
+| onum | amt     |
++------+---------+
+| 3003 |  767.19 |
+| 3008 |    4723 |
+| 3011 | 9891.88 |
++------+---------+
+3 rows in set (0.00 sec)
+
+
+
+
+***********************************************************************************************************************************
+
+
+Que 78-> Find all salespeople whose commission is in between 0.10 and 0.12(both inclusive).
+
+Query ->SELECT snum,sname,comm
+      ->FROM salespeople
+      ->WHERE comm BETWEEN 10 AND 12;
+
+
++------+---------+------+
+| snum | sname   | comm |
++------+---------+------+
+| 1001 | Peel    | 12   |
+| 1003 | AxelRod | 10   |
+| 1004 | Motika  | 11   |
++------+---------+------+
+3 rows in set (0.00 sec)
+
+
+
+***********************************************************************************************************************************
+
+
+Que 79->Write a query that will give you the names and cities of all salespeople in London with a commission above 0.10.
+
+Query ->SELECT sname,city
+      ->FROM salespeople
+      ->WHERE city='London' AND comm > 10;
++--------+--------+
+| sname  | city   |
++--------+--------+
+| Peel   | London |
+| Motika | London |
+| Fran   | London |
++--------+--------+
+3 rows in set (0.01 sec)
+
+
+
+
+
+***********************************************************************************************************************************
+
+
+Que 80->Write a query that selects each customer’s smallest order
+
+Query -> SELECT cnum,MIN(amt) AS min_order 
+      -> FROM Orders 
+      -> GROUP BY cnum;
+
+
++------+-----------+
+| cnum | min_order |
++------+-----------+
+| 2001 |    767.19 |
+| 2002 |   1713.23 |
+| 2003 |   5160.45 |
+| 2004 |     75.75 |
+| 2006 |      4723 |
+| 2007 |    1900.1 |
+| 2008 |     18.69 |
++------+-----------+
+7 rows in set (0.00 sec)
+
 
 
 
